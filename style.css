@@ -88,8 +88,9 @@ body {
 }
 .sidebar {
   flex: 1.5;
+  overflow: hidden;
   height: 80rem;
-  background-color: #e67e22;
+  /* background-color: #e67e22; */
 }
 
 .corona-global {
@@ -179,4 +180,25 @@ body {
   background-color: rgb(216, 216, 216);
   color: #000;
   border-radius: 5px;
+}
+
+.sidebar2 {
+  display: none;
+  background-color: red;
+  height: 80rem;
+}
+.sidebar1 {
+  background-color: aqua;
+  display: none;
+  height: 80rem;
+}
+.sidebar3 {
+  /* display: none; */
+  background-color: rgb(255, 251, 0);
+  height: 80rem;
+}
+.sidebar4 {
+  background-color: rgb(153, 0, 255);
+  display: none;
+  height: 80rem;
 }
