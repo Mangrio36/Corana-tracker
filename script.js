@@ -95,7 +95,7 @@ about.addEventListener("click", (e) => {
 //     dead.innerText = deaths;
 //   })
 //   .catch((err) => console.error(err));
-const opions = {
+const options = {
   method: "GET",
   headers: {
     "X-RapidAPI-Key": "d58ddb8cfbmsh126e6d03322f2f1p12f43bjsn15cb86d6c87d",
@@ -106,7 +106,7 @@ const opions = {
 
 fetch(
   "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/world",
-  opions
+  options
 )
   .then((response) => {
     return response.json();
@@ -125,4 +125,12 @@ fetch(
     const dead = document.querySelector(".dead");
     dead.innerText = deaths;
   })
+  .catch((err) => console.error(err));
+
+fetch(
+  "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/news/get-coronavirus-news/0",
+  options
+)
+  .then((response) => response.json())
+  .then((response) => console.log(response))
   .catch((err) => console.error(err));
