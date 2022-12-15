@@ -94,15 +94,16 @@ body {
 }
 
 .corona-global {
-  border: solid 1px rgba(0, 0, 0, 0.377);
+  border: solid 0.5px rgba(119, 119, 119, 0.308);
   box-shadow: 0 1rem 2.2rem rgba(0, 0, 0, 0.03);
   height: auto;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 1rem auto;
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr 1fr;
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 500;
+  padding: 1rem;
 }
 .live {
   margin: 1rem;
@@ -112,36 +113,41 @@ body {
 }
 
 .confirmed {
-  background-color: rgba(255, 0, 0, 0.144);
+  background-color: #fff5f5;
   margin: 1rem;
   border-radius: 10px;
   display: grid;
   grid-template-rows: 2fr 1fr;
   align-items: center;
+  padding: 6rem;
   justify-content: center;
-
   color: rgb(255, 0, 0);
   position: relative;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 .recovered {
-  background-color: rgba(0, 128, 0, 0.13);
+  background-color: #f0fff4;
   margin: 1rem;
   display: grid;
   grid-template-rows: 2fr 1fr;
   border-radius: 10px;
   align-items: center;
   justify-content: center;
+  padding: 6rem;
   color: green;
   position: relative;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 .death {
-  background-color: rgba(0, 0, 0, 0.13);
+  background-color: #edf2f7;
   margin: 1rem;
   display: grid;
   grid-template-rows: 2fr 1fr;
   border-radius: 10px;
   align-items: center;
+  padding: 6rem;
   justify-content: center;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
 
   color: black;
   position: relative;
@@ -156,15 +162,15 @@ body {
   justify-content: center;
 }
 .redbox {
-  background-color: rgba(255, 0, 0, 0.253);
+  background-color: #fed7d7;
   border-radius: 0 0 5px 5px;
 }
 .greenbox {
-  background-color: rgba(0, 128, 0, 0.315);
+  background-color: #c6f6d5;
   border-radius: 0 0 5px 5px;
 }
 .blackbox {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #e2e8f0;
   border-radius: 0 0 5px 5px;
 }
 
@@ -190,6 +196,8 @@ body {
 }
 .sidebar1 {
   display: none;
+  font-size: 1.8rem;
+  padding: 2rem;
 }
 .sidebar3 {
   /* display: none; */
@@ -209,8 +217,7 @@ body {
   color: #000;
 }
 .para {
-  padding: 1rem;
-  font-size: 2rem;
+  margin-top: 1rem;
 }
 .list {
   padding: 3rem;
@@ -218,6 +225,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+.list-sec {
+  font-size: 1.6rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
 }
 .list a {
   text-decoration: none;
