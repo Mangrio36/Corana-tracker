@@ -57,44 +57,6 @@ about.addEventListener("click", (e) => {
   sidebar3.style.display = "none";
 });
 
-// const dateObj = new Date();
-// let month = dateObj.getUTCMonth() + 1; //months from 1-12
-// let day = dateObj.getUTCDate();
-// let year = dateObj.getUTCFullYear();
-
-// let newdate = year + "-" + month + "-" + (day - 1);
-// console.log(newdate);
-
-// const options = {
-//   method: "GET",
-//   headers: {
-//     "X-RapidAPI-Key": "d58ddb8cfbmsh126e6d03322f2f1p12f43bjsn15cb86d6c87d",
-//     "X-RapidAPI-Host": "covid-19-statistics.p.rapidapi.com",
-//   },
-// };
-
-// fetch(
-//   `https://covid-19-statistics.p.rapidapi.com/reports/total?date=${newdate}`,
-//   options
-// )
-//   .then((response) => {
-//     return response.json();
-//   })
-//   .then((data) => {
-//     console.log(data);
-//     const deaths = data.data.deaths;
-//     const active = data.data.active;
-//     console.log(deaths);
-//     console.log(active);
-//     const confirm = data.data.confirmed;
-//     const numbers = document.querySelector(".numbers");
-//     numbers.innerText = confirm;
-//     const recover = document.querySelector(".recover");
-//     recover.innerText = active;
-//     const dead = document.querySelector(".dead");
-//     dead.innerText = deaths;
-//   })
-//   .catch((err) => console.error(err));
 const options = {
   method: "GET",
   headers: {
