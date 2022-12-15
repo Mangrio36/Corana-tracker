@@ -61,25 +61,21 @@ const options = {
   method: "GET",
   headers: {
     "X-RapidAPI-Key": "d58ddb8cfbmsh126e6d03322f2f1p12f43bjsn15cb86d6c87d",
-    "X-RapidAPI-Host":
-      "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com",
+    "X-RapidAPI-Host": "covid-19-statistics.p.rapidapi.com",
   },
 };
 
-fetch(
-  "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/world",
-  options
-)
+fetch("https://covid-19-statistics.p.rapidapi.com/reports/total", options)
   .then((response) => {
     return response.json();
   })
   .then((data) => {
     console.log(data);
-    const deaths = data[0].TotalDeaths;
+    const deaths = data.data.deaths;
     console.log(deaths);
-    const active = data[0].TotalRecovered;
+    const active = data.data.active;
     console.log(active);
-    const confirm = data[0].ActiveCases;
+    const confirm = data.data.confirmed;
     const numbers = document.querySelector(".numbers");
     numbers.innerText = confirm;
     const recover = document.querySelector(".recover");
@@ -89,8 +85,22 @@ fetch(
   })
   .catch((err) => console.error(err));
 
+const country = document.querySelector(".country");
+const countryConfirm = document.querySelector(".country-confirm");
+const countryRecovered = document.querySelector(".countrt-recovered");
+const countryDeaths = document.querySelector(".countrt-death");
+
+fetch("https://covid-19-statistics.p.rapidapi.com/regions", options)
+  .then((response) => response.json())
+  .then((response) => console.log(response))
+  .catch((err) => console.error(err));
+fetch("https://covid-19-statistics.p.rapidapi.com/provinces?iso=PAK", options)
+  .then((response) => response.json())
+  .then((response) => console.log(response))
+  .catch((err) => console.error(err));
+
 fetch(
-  "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/news/get-coronavirus-news/0",
+  "https://covid-19-statistics.p.rapidapi.com/reports?region_province=Islamabad&iso=PAK",
   options
 )
   .then((response) => response.json())
