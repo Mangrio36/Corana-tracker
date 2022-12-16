@@ -85,24 +85,47 @@ fetch("https://covid-19-statistics.p.rapidapi.com/reports/total", options)
   })
   .catch((err) => console.error(err));
 
-const country = document.querySelector(".country");
 const countryConfirm = document.querySelector(".country-confirm");
 const countryRecovered = document.querySelector(".countrt-recovered");
 const countryDeaths = document.querySelector(".countrt-death");
+const searchData = document.querySelector(".searchdata");
+const btn = document.querySelector(".btn");
+const form = document.querySelector(".form");
 
-fetch("https://covid-19-statistics.p.rapidapi.com/regions", options)
-  .then((response) => response.json())
-  .then((response) => console.log(response))
-  .catch((err) => console.error(err));
-fetch("https://covid-19-statistics.p.rapidapi.com/provinces?iso=PAK", options)
-  .then((response) => response.json())
-  .then((response) => console.log(response))
-  .catch((err) => console.error(err));
+form.addEventListener("submit", (e) => {
+  searchText = searchData.value;
+  console.log(searchText);
+  e.preventDefault();
+  SearchFunc(searchText);
+});
+const SearchFunc = (searchText) => {
+  fetch(
+    `https://covid-19-statistics.p.rapidapi.com/reports?region_name=${searchText}`,
+    options
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      let countryName = data.data[0].region.name;
+      const country = document.getElementById("country");
+      country.innerText = countryName;
+      let totalCase = 0;
+      for (i = 0; i < data.data.length; i++) {
+        totalCase += parseInt(data.data[i].active);
+      }
+      const casess = document.getElementById("cases");
+      casess.innerText = totalCase;
+      let totaldeath = 0;
+      for (i = 0; i < data.data.length; i++) {
+        totaldeath += parseInt(data.data[i].deaths);
+      }
+      const deathss = document.getElementById("deaths");
+      deathss.innerText = totaldeath;
 
-fetch(
-  "https://covid-19-statistics.p.rapidapi.com/reports?region_province=Islamabad&iso=PAK",
-  options
-)
-  .then((response) => response.json())
-  .then((response) => console.log(response))
-  .catch((err) => console.error(err));
+      const lastUpdate = document.getElementById("update");
+      lastUpdate.innerText = data.data[0].last_update;
+    })
+    .catch((err) => console.error(err));
+};
