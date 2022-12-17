@@ -172,7 +172,13 @@ form.addEventListener("submit", (e) => {
             optons
           )
             .then((response) => response.json())
-            .then((response) => console.log(response))
+            .then((data) => {
+              console.log(data);
+              const newDeath = document.getElementById("newdeaths");
+              const newCases = document.getElementById("newcases");
+              newDeath.innerText = data[0].NewDeaths;
+              newCases.innerText = data[0].Population;
+            })
             .catch((err) => console.error(err));
         })
         .catch((err) => console.error(err));
