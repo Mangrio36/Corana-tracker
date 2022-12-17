@@ -82,6 +82,9 @@ fetch("https://covid-19-statistics.p.rapidapi.com/reports/total", options)
     recover.innerText = active;
     const dead = document.querySelector(".dead");
     dead.innerText = deaths;
+    const updated = document.querySelector(".updated");
+    updated.innerText = data.data.last_update;
+    console.log(updated);
   })
   .catch((err) => console.error(err));
 

@@ -182,7 +182,7 @@ h1 {
   margin-bottom: 2rem;
 }
 .overview {
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
   color: #000;
   font-weight: 600;
 }
@@ -381,4 +381,13 @@ h4 {
   /*when navigating through the items using the arrow keys:*/
   background-color: DodgerBlue !important;
   color: #ffffff;
+}
+
+.updated {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+.updatedz {
+  font-size: 1.4rem;
+  font-weight: 400;
 }
