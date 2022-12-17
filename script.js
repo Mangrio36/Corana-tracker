@@ -57,6 +57,7 @@ about.addEventListener("click", (e) => {
   sidebar3.style.display = "none";
 });
 
+// global Stats
 const options = {
   method: "GET",
   headers: {
@@ -70,11 +71,8 @@ fetch("https://covid-19-statistics.p.rapidapi.com/reports/total", options)
     return response.json();
   })
   .then((data) => {
-    console.log(data);
     const deaths = data.data.deaths;
-    console.log(deaths);
     const active = data.data.active;
-    console.log(active);
     const confirm = data.data.confirmed;
     const numbers = document.querySelector(".numbers");
     numbers.innerText = confirm;
@@ -84,7 +82,6 @@ fetch("https://covid-19-statistics.p.rapidapi.com/reports/total", options)
     dead.innerText = deaths;
     const updated = document.querySelector(".updated");
     updated.innerText = data.data.last_update;
-    console.log(updated);
   })
   .catch((err) => console.error(err));
 
@@ -95,59 +92,70 @@ const searchData = document.querySelector(".searchdata");
 const btn = document.querySelector(".btn");
 const form = document.querySelector(".form");
 
+// stats of countries on search
 form.addEventListener("submit", (e) => {
-  searchText = searchData.value;
-  console.log(searchText);
   e.preventDefault();
-  SearchFunc(searchText);
-});
+  searchText = searchData.value;
 
-const SearchFunc = (searchText) => {
-  fetch(
-    `https://covid-19-statistics.p.rapidapi.com/reports?region_name=${searchText}`,
-    options
-  )
+  fetch(`https://covid-19-statistics.p.rapidapi.com/regions`, options)
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
-      let countryName = data.data[0].region.name;
-      const country = document.getElementById("country");
-      country.innerText = countryName;
-      let totalCase = 0;
-      for (i = 0; i < data.data.length; i++) {
-        totalCase += parseInt(data.data[i].active);
-      }
-      const casess = document.getElementById("cases");
-      casess.innerText = totalCase;
-      let totaldeath = 0;
-      for (i = 0; i < data.data.length; i++) {
-        totaldeath += parseInt(data.data[i].deaths);
-      }
-      const deathss = document.getElementById("deaths");
-      deathss.innerText = totaldeath;
+      const countriesIso = [];
 
-      const lastUpdate = document.getElementById("update");
-      lastUpdate.innerText = data.data[0].last_update;
+      for (i = 0; i < data.data.length; i++) {
+        if (searchText === data.data[i].name) {
+          count = data.data[i].iso;
+          countriesIso.push(count);
+        }
+      }
+      console.log(countriesIso);
+      fetch(
+        `https://covid-19-statistics.p.rapidapi.com/reports?iso=${countriesIso}`,
+        options
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          let countryName = data.data[0].region.name;
+          const country = document.getElementById("country");
+          country.innerText = countryName;
+          let totalCase = 0;
+          for (i = 0; i < data.data.length; i++) {
+            totalCase += parseInt(data.data[i].active);
+          }
+          const casess = document.getElementById("cases");
+          casess.innerText = totalCase;
+          let totaldeath = 0;
+          for (i = 0; i < data.data.length; i++) {
+            totaldeath += parseInt(data.data[i].deaths);
+          }
+          const deathss = document.getElementById("deaths");
+          deathss.innerText = totaldeath;
+
+          const lastUpdate = document.getElementById("update");
+          lastUpdate.innerText = data.data[0].last_update;
+        })
+        .catch((err) => console.error(err));
     })
     .catch((err) => console.error(err));
-};
+});
 
 fetch(`https://covid-19-statistics.p.rapidapi.com/regions`, options)
   .then((response) => {
     return response.json();
   })
   .then((data) => {
-    console.log(data);
-
     const countries = [];
 
     for (i = 0; i < data.data.length; i++) {
       count = data.data[i].name;
       countries.push(count);
     }
-    console.log(countries);
+
     autocomplete(searchData, countries);
     function autocomplete(inp, arr) {
       /*the autocomplete function takes two arguments,
