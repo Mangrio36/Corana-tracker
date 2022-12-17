@@ -85,9 +85,6 @@ fetch("https://covid-19-statistics.p.rapidapi.com/reports/total", options)
   })
   .catch((err) => console.error(err));
 
-const countryConfirm = document.querySelector(".country-confirm");
-const countryRecovered = document.querySelector(".countrt-recovered");
-const countryDeaths = document.querySelector(".countrt-death");
 const searchData = document.querySelector(".searchdata");
 const btn = document.querySelector(".btn");
 const form = document.querySelector(".form");
@@ -200,96 +197,79 @@ fetch(`https://covid-19-statistics.p.rapidapi.com/regions`, options)
 
     autocomplete(searchData, countries);
     function autocomplete(inp, arr) {
-      /*the autocomplete function takes two arguments,
-        the text field element and an array of possible autocompleted values:*/
       var currentFocus;
-      /*execute a function when someone writes in the text field:*/
+
       inp.addEventListener("input", function (e) {
         var a,
           b,
           i,
           val = this.value;
-        /*close any already open lists of autocompleted values*/
+
         closeAllLists();
         if (!val) {
           return false;
         }
         currentFocus = -1;
-        /*create a DIV element that will contain the items (values):*/
+
         a = document.createElement("DIV");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
-        /*append the DIV element as a child of the autocomplete container:*/
+
         this.parentNode.appendChild(a);
-        /*for each item in the array...*/
+
         for (i = 0; i < arr.length; i++) {
-          /*check if the item starts with the same letters as the text field value:*/
           if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-            /*create a DIV element for each matching element:*/
             b = document.createElement("DIV");
-            /*make the matching letters bold:*/
+
             b.innerHTML =
               "<strong>" + arr[i].substr(0, val.length) + "</strong>";
             b.innerHTML += arr[i].substr(val.length);
-            /*insert a input field that will hold the current array item's value:*/
+
             b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-            /*execute a function when someone clicks on the item value (DIV element):*/
+
             b.addEventListener("click", function (e) {
-              /*insert the value for the autocomplete text field:*/
               inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-                    (or any other open lists of autocompleted values:*/
+
               closeAllLists();
             });
             a.appendChild(b);
           }
         }
       });
-      /*execute a function presses a key on the keyboard:*/
+
       inp.addEventListener("keydown", function (e) {
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) x = x.getElementsByTagName("div");
         if (e.keyCode == 40) {
-          /*If the arrow DOWN key is pressed,
-              increase the currentFocus variable:*/
           currentFocus++;
-          /*and and make the current item more visible:*/
+
           addActive(x);
         } else if (e.keyCode == 38) {
-          //up
-          /*If the arrow UP key is pressed,
-              decrease the currentFocus variable:*/
           currentFocus--;
-          /*and and make the current item more visible:*/
+
           addActive(x);
         } else if (e.keyCode == 13) {
-          /*If the ENTER key is pressed, prevent the form from being submitted,*/
           e.preventDefault();
           if (currentFocus > -1) {
-            /*and simulate a click on the "active" item:*/
             if (x) x[currentFocus].click();
           }
         }
       });
       function addActive(x) {
-        /*a function to classify an item as "active":*/
         if (!x) return false;
-        /*start by removing the "active" class on all items:*/
+
         removeActive(x);
         if (currentFocus >= x.length) currentFocus = 0;
         if (currentFocus < 0) currentFocus = x.length - 1;
-        /*add class "autocomplete-active":*/
+
         x[currentFocus].classList.add("autocomplete-active");
       }
       function removeActive(x) {
-        /*a function to remove the "active" class from all autocomplete items:*/
         for (var i = 0; i < x.length; i++) {
           x[i].classList.remove("autocomplete-active");
         }
       }
       function closeAllLists(elmnt) {
-        /*close all autocomplete lists in the document,
-          except the one passed as an argument:*/
         var x = document.getElementsByClassName("autocomplete-items");
         for (var i = 0; i < x.length; i++) {
           if (elmnt != x[i] && elmnt != inp) {
@@ -297,10 +277,97 @@ fetch(`https://covid-19-statistics.p.rapidapi.com/regions`, options)
           }
         }
       }
-      /*execute a function when someone clicks in the document:*/
+
       document.addEventListener("click", function (e) {
         closeAllLists(e.target);
       });
     }
   })
   .catch((err) => console.error(err));
+
+// sidebar data
+
+const countryConfirm = document.querySelector(".country-confirm");
+const countryNames = document.querySelector(".countryname");
+const countryRecovered = document.querySelector(".countrt-recovered");
+const countryDeaths = document.querySelector(".countrt-death");
+
+const optons = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "d58ddb8cfbmsh126e6d03322f2f1p12f43bjsn15cb86d6c87d",
+    "X-RapidAPI-Host":
+      "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com",
+  },
+};
+
+fetch(
+  "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/",
+  optons
+)
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    console.log(data);
+
+    for (i = 0; i < data.length; i++) {
+      const div = document.createElement("p");
+      div.innerText = data[i].Country;
+      countryNames.appendChild(div);
+      const ele = document.createElement("p");
+      ele.innerText = data[i].ActiveCases;
+      countryConfirm.appendChild(ele);
+      const elel = document.createElement("p");
+      elel.innerText = data[i].TotalDeaths;
+      countryDeaths.appendChild(elel);
+      const ell = document.createElement("p");
+      ell.innerText = data[i].TotalRecovered;
+      countryRecovered.appendChild(ell);
+      div.addEventListener("click", () => {
+        console.log(div.innerText);
+
+        fetch(
+          "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/countries-name-ordered",
+          optons
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            for (i = 0; i < data.length; i++) {
+              if (div.innerText === data[i].Country) {
+                const iso = data[i].ThreeLetterSymbol;
+                console.log(iso);
+                anb(div.innerText, iso);
+              }
+            }
+          })
+          .catch((err) => console.error(err));
+      });
+    }
+  })
+  .catch((err) => console.error(err));
+
+// sidebar click on country to get data
+const anb = (kami, iso) => {
+  fetch(
+    `https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/country-report-iso-based/${kami}/${iso}`,
+    optons
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      const newDeath = document.getElementById("newdeaths");
+      const newCases = document.getElementById("newcases");
+      const country = document.getElementById("country");
+      const deathss = document.getElementById("deaths");
+      const casess = document.getElementById("cases");
+      casess.innerText = data[0].TotalCases;
+      country.innerText = data[0].Country;
+      deathss.innerText = data[0].TotalDeaths;
+      newDeath.innerText = data[0].NewDeaths;
+      newCases.innerText = data[0].Population;
+    })
+    .catch((err) => console.error(err));
+};
