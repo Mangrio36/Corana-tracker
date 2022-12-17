@@ -82,6 +82,37 @@ fetch("https://covid-19-statistics.p.rapidapi.com/reports/total", options)
     dead.innerText = deaths;
     const updated = document.querySelector(".updated");
     updated.innerText = data.data.last_update;
+    const lastUpdate = document.getElementById("update");
+    lastUpdate.innerText = data.data.last_update;
+  })
+  .catch((err) => console.error(err));
+
+const optns = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "d58ddb8cfbmsh126e6d03322f2f1p12f43bjsn15cb86d6c87d",
+    "X-RapidAPI-Host":
+      "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com",
+  },
+};
+
+fetch(
+  "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/country-report-iso-based/Pakistan/pak",
+  optns
+)
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+    const newDeath = document.getElementById("newdeaths");
+    const newCases = document.getElementById("newcases");
+    const country = document.getElementById("country");
+    const deathss = document.getElementById("deaths");
+    const casess = document.getElementById("cases");
+    casess.innerText = data[0].TotalCases;
+    country.innerText = data[0].Country;
+    deathss.innerText = data[0].TotalDeaths;
+    newDeath.innerText = data[0].NewDeaths;
+    newCases.innerText = data[0].Population;
   })
   .catch((err) => console.error(err));
 
