@@ -347,7 +347,7 @@ fetch(
       div.innerText = data[i].Country;
       countryNames.appendChild(div);
       const ele = document.createElement("p");
-      ele.innerText = data[i].ActiveCases;
+      ele.innerText = data[i].TotalCases;
       countryConfirm.appendChild(ele);
       const elel = document.createElement("p");
       elel.innerText = data[i].TotalDeaths;
