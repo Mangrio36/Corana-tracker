@@ -140,6 +140,42 @@ form.addEventListener("submit", (e) => {
           lastUpdate.innerText = data.data[0].last_update;
         })
         .catch((err) => console.error(err));
+
+      const optons = {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key":
+            "d58ddb8cfbmsh126e6d03322f2f1p12f43bjsn15cb86d6c87d",
+          "X-RapidAPI-Host":
+            "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com",
+        },
+      };
+
+      fetch(
+        "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/countries-name-ordered",
+        optons
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const countries = [];
+          console.log(countries);
+          countriesIsoLowercase = countriesIso[0].toLowerCase();
+
+          for (i = 0; i < data.length; i++) {
+            if (countriesIsoLowercase === data[i].ThreeLetterSymbol) {
+              count = data[i].Country;
+              countries.push(count);
+            }
+          }
+          fetch(
+            `https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/country-report-iso-based/${countries}/${countriesIsoLowercase}`,
+            optons
+          )
+            .then((response) => response.json())
+            .then((response) => console.log(response))
+            .catch((err) => console.error(err));
+        })
+        .catch((err) => console.error(err));
     })
     .catch((err) => console.error(err));
 });
